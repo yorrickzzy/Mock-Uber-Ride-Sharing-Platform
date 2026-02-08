@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  {% if form.instance.pk %}
+    Update Ride - Mock Uber
+  {% else %}
+    Request a Ride - Mock Uber
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if form.instance.pk %}
+    <h2>Update Ride</h2>
+  {% else %}
+    <h2>Request a Ride</h2>
+  {% endif %}
+  <form method="post" class="request-ride-form">
+    {% csrf_token %}
+    <div class="d-flex flex-column gap-2">
+      {{ form|crispy }}
+      {% if form.instance.pk %}
+        <button type="submit">Update Ride</button>
+      {% else %}
+        <button type="submit">Request Ride</button>
+      {% endif %}
+      <a href="{% url 'view_rides' %}">Back to My Rides</a>
+    </div>
+  </form>
+{% endblock %}

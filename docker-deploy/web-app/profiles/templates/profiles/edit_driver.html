@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Driver Profile{% endblock %}
+
+{% block content %}
+<h2>Edit Driver Profile</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <h3>Driver Information</h3>
+    {{ driver_form.as_p }}
+
+    <h3>Vehicle Information</h3>
+    {{ vehicle_form.as_p }}
+
+    <button type="submit">Save Changes</button>
+</form>
+
+<a href="{% url 'driver_detail' %}">Cancel</a>
+{% endblock %}

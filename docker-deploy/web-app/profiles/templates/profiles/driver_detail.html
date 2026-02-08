@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Driver Profile{% endblock %}
+
+{% block content %}
+<h2>Driver Profile</h2>
+
+<hr>
+
+<section>
+    <h3>Basic Information</h3>
+    <p><strong>Name:</strong> {{ driver.full_name }}</p>
+    <p>
+        <strong>Status:</strong>
+        {% if driver.is_active %}
+            <span style="color: green; font-weight: bold;">Active</span>
+        {% else %}
+            <span style="color: red; font-weight: bold;">Inactive</span>
+        {% endif %}
+    </p>
+</section>
+
+<hr>
+
+<section>
+    <h3>Vehicle Information</h3>
+    <ul>
+        <li><strong>Type:</strong> {{ vehicle.vehicle_type }}</li>
+        <li><strong>License Plate:</strong> {{ vehicle.license_plate }}</li>
+        <li><strong>Capacity:</strong> {{ vehicle.capacity }}</li>
+        <li><strong>Special Info:</strong> {{ vehicle.special_info|default:"N/A" }}</li>
+    </ul>
+</section>
+
+<hr>
+
+<div class="d-flex">
+    <a href="{% url 'edit_driver' %}">
+        <button>Edit Profile</button>
+    </a>
+
+    <a href="{% url 'home' %}" style="margin-left: 10px;">
+        <button style="background-color: #6c757d;">Back to Home</button>
+    </a>
+</div>
+{% endblock %}

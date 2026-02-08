@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}My Rides{% endblock %}
+
+{% block content %}
+  <h2>Your Rides</h2>
+  <div class="d-flex gap-3">
+    <a href="{% url 'request_ride' %}">
+      <button>Request New Ride</button>
+    </a>
+    <a href="{% url 'view_rides' %}">
+      <button>View All Rides</button>
+    </a>
+    <a href="{% url 'upcoming_rides' %}">
+      <button>View Upcoming Rides</button>
+    </a>
+    <a href="{% url 'completed_rides' %}">
+      <button>View Completed Rides</button>
+    </a>
+  </div>
+  <hr>
+  {% if rides %}
+    <table class="table table-bordered table-sm align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Destination</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ride in rides %}
+            <tr>
+                <td>{{ ride.destination }}</td>
+                <td>{{ ride.requested_time|date:"m/d/Y" }}</td>
+                <td>{{ ride.requested_time|time:"h:i A" }}</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <a href="{% url 'ride_details' ride.pk %}">
+                      <button>View Details</button>
+                    </a>
+                  </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  {% else %}
+    <p>No rides found.</p>
+  {% endif %}
+  <a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register as Driver{% endblock %}
+
+{% block content %}
+  <h2>Register as Driver</h2>
+
+  <form method="post" class="driver-registration-form">
+    {% csrf_token %}
+
+    <h3>Driver Information</h3>
+    {{ driver_form|crispy }}
+
+    <h3>Vehicle Information</h3>
+    {{ vehicle_form|crispy }}
+
+    <button type="submit">Register</button>
+  </form>
+
+  <br>
+  <a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}
+
+

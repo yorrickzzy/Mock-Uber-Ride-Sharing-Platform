@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Driver Search{% endblock %}
+
+{% block content %}
+<h2>Open Rides (Driver Search)</h2>
+{% if rides %}
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th>Destination</th>
+      <th>Time</th>
+      <th>Passengers</th>
+      <th>Shared</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ride in rides %}
+    <tr>
+      <td>{{ ride.destination }}</td>
+      <td>{{ ride.requested_time|date:"m/d/Y H:i A" }}</td>
+      <td>{{ ride.num_passengers }}</td>
+      <td>{{ ride.is_shared }}</td>
+      <td>
+      <a href="{% url 'confirm_ride' ride.pk %}">
+        <button class="btn btn-primary btn-sm">Confirm</button>
+      </a>
+    </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No open rides.</p>
+{% endif %}
+
+<a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}

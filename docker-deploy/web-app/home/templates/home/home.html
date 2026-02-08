@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Mock Uber{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ user.username }}!</h2>
+
+<p>This is your Mock Uber dashboard.</p>
+
+<hr>
+
+<div class="d-flex gap-3">
+    <a href="{% url 'view_rides' %}">
+        <button>View Rides</button>
+    </a>
+    <a href="{% url 'search_rides' %}">
+        <button>Search Shared Rides</button>
+    </a>
+    <a href="{% url 'register_driver' %}">
+        <button>Register as Driver</button>
+    </a>
+    {% if user.driverprofile %}
+        {% if user.driverprofile.is_active %}
+        <a href="{% url 'driver_search_rides' %}">
+            <button>Driver: Search Open Rides</button>
+        </a>
+        {% endif %}
+        <a href="{% url 'driver_confirmed_rides' %}">
+            <button>My Confirmed Rides</button>
+        </a>
+    {% endif %}
+</div>
+{% endblock %}
+
+

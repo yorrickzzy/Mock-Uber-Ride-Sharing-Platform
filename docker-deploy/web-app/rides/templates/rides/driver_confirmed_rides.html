@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}My Confirmed Rides{% endblock %}
+
+{% block content %}
+<h2>My Confirmed Rides</h2>
+
+{% if rides %}
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th>Destination</th>
+      <th>Time</th>
+      <th>Passengers</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ride in rides %}
+    <tr>
+      <td>{{ ride.destination }}</td>
+      <td>{{ ride.requested_time|date:"m/d/Y H:i A" }}</td>
+      <td>{{ ride.num_passengers }}</td>
+      <td>
+        <a href="{% url 'ride_details' ride.pk %}" class="btn btn-secondary btn-sm">
+          View
+        </a>
+	<a href="{% url 'complete_ride' ride.pk %}" class="btn btn-success btn-sm">
+	  Complete
+	</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No confirmed rides yet.</p>
+{% endif %}
+
+<a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}

@@ -1,0 +1,81 @@
+
+{% extends "base.html" %}
+
+{% block title %}Search Sharable Rides{% endblock %}
+
+{% block content %}
+<h2>Available Shared Rides</h2>
+
+<form method="get" class="mb-3">
+  <div class="input-group d-flex gap-2">
+    <div class="col">
+      <input type="text"
+             name="destination"
+             class="form-control"
+             placeholder="Destination"
+             value="{{ request.GET.destination }}">
+    </div>
+
+    <div class="col">
+      <input type="datetime-local"
+             name="earliest"
+             class="form-control"
+             value="{{ request.GET.earliest }}">
+    </div>
+
+    <div class="col">
+      <input type="datetime-local"
+             name="latest"
+             class="form-control"
+             value="{{ request.GET.latest }}">
+    </div>
+
+    <div class="col-md-2">
+      <input type="number"
+             name="passengers"
+             class="form-control"
+             placeholder="Passengers"
+             min="1"
+             value="{{ request.GET.passengers }}">
+    </div>
+
+    <div class="col mt-1">
+      <button type="submit" class="btn btn-primary">
+        Search
+      </button>
+    </div>
+  </div>
+</form>
+
+{% if rides %}
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th>Destination</th>
+      <th>Time</th>
+      <th>Passengers</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ride in rides %}
+    <tr>
+      <td>{{ ride.destination }}</td>
+      <td>{{ ride.requested_time|date:"m/d/Y H:i A" }}</td>
+      <td>{{ ride.num_passengers }}</td>
+      <td>
+        <a href="{% url 'join_ride' ride.pk %}">
+          <button class="btn btn-success btn-sm">Join</button>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No sharable rides available.</p>
+{% endif %}
+
+<a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}
+

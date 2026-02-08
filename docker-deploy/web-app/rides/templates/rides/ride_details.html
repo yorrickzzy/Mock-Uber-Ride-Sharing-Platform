@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}My Rides{% endblock %}
+
+{% block content %}
+    <h2>Ride Details</h2>
+    <table class="table table-bordered table-sm">
+        <tbody>
+            <tr>
+                <th scope="row">Destination</th>
+                <td>{{ ride.destination }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Requested Time</th>
+                <td>{{ ride.requested_time|date:"m/d/Y H:i A" }}</td>
+            </tr>
+	    <tr>
+	      <th scope="row">Requested Vehicle Type</th>
+	      <td>
+		{% if ride.vehicle_type %}
+		  {{ ride.vehicle_type }}
+		{% else %}
+		  Any
+		{% endif %}
+	      </td>
+	    </tr>
+	    <tr>
+	      <th scope="row">Special Request</th>
+	      <td>
+		{% if ride.special_request %}
+		  {{ ride.special_request }}
+		{% else %}
+		  None
+		{% endif %}
+	      </td>
+	    </tr>
+            {% if ride.is_confirmed and ride.vehicle %}
+	    <tr>
+	      <th>Driver</th>
+	      <td>{{ ride.vehicle.driver.full_name }}</td>
+	    </tr>
+	    <tr>
+	      <th>Vehicle</th>
+	      <td>
+		{{ ride.vehicle.vehicle_type }} - {{ ride.vehicle.license_plate }}
+	      </td>
+	    </tr>
+	    {% else %}
+	    <tr>
+	      <th>Driver</th>
+	      <td><em>Not assigned yet</em></td>
+	    </tr>
+	    <tr>
+	      <th>Vehicle</th>
+	      <td><em>Not assigned yet</em></td>
+	    </tr>
+	    {% endif %}
+            <tr>
+                <th scope="row">Shared</th>
+                <td>{{ ride.is_shared }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Number of Passengers</th>
+                <td>{{ ride.num_passengers }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Status</th>
+                <td>
+                    {% if ride.is_completed %}
+                        Completed
+                    {% elif ride.is_confirmed %}
+                        Confirmed
+                    {% else %}
+                        Pending
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex gap-2 align-items-center">
+      {% if is_driver %}
+      <a href="{% url 'driver_confirmed_rides' %}" class="btn btn-secondary">
+	Back to My Confirmed Rides
+      </a>
+      <span class="text-success fw-bold">
+	You are the driver of this ride.
+      </span>
+      {% else %}
+      <a href="{% url 'view_rides' %}" class="btn btn-secondary">
+	Back to My Rides
+      </a>
+      {% endif %}
+      {% if not ride.is_confirmed %}
+      {% if user == ride.owner %}
+      <a href="{% url 'update_ride' ride.pk %}">
+        <button>Update</button>
+	</a>
+      <a href="{% url 'cancel_ride' ride.pk %}">
+        <button>Cancel Ride</button>
+      </a>
+      {% elif user in ride.sharers.all %}
+      <a href="{% url 'leave_ride' ride.pk %}">
+        <button>Leave Ride</button>
+      </a>
+      {% endif %}
+      {% endif %}
+    </div>
+{% endblock %}
+

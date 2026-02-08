@@ -1,0 +1,52 @@
+Danger Log – HW1 Mock Uber Project
+---------------------------------
+
+1. Role Confusion Between Passenger and Driver
+------------------------------------------------
+In this project, a user can act as both a passenger and a driver. A major danger is allowing a user
+to perform driver-only actions (such as searching open rides or confirming rides) without being
+properly registered as a driver. This initially caused runtime errors when accessing DriverProfile
+objects that did not exist.
+
+Mitigation:
+We added explicit driver existence checks before all driver-related views. If a user is not
+registered as a driver, the system now blocks driver-only access instead of crashing.
+
+2. Inactive Driver Accepting Open Rides
+---------------------------------------
+Another concern was that inactive drivers are able to search for open rides and confirm them, 
+promising users something that will never come.
+
+Mitigation:
+Similar to role confusion, we added additional validation to determine whether a driver has access 
+to searching for open rides
+
+3. Driver Confirming Their Own Ride
+-----------------------------------
+Another dangerous edge case is allowing a user to confirm their own ride request after registering
+as a driver. This creates an invalid logical state where the same user is both rider and driver for
+a single ride.
+
+Mitigation:
+We explicitly check whether the ride owner matches the current driver user. If so, the confirmation
+is rejected and a clear error message ("You are not allowed to confirm your own ride") is displayed.
+
+4. Silent Failures Due to Over-Redirecting
+------------------------------------------
+Originally, some invalid operations (e.g., unauthorized ride confirmation) simply redirected users
+back to the previous page without explanation. This can confuse users and hide bugs during testing.
+
+Mitigation:
+We replaced silent redirects with Django messages so users receive immediate and explicit feedback
+when an action is not permitted.
+
+5. Unauthorized Ride Modification by Sharers
+------------------------------------------
+In this project, a ride request can have one owner and multiple sharers. A potential danger is
+allowing sharers to modify ride details such as destination, requested time, or number of passengers.
+This could lead to unauthorized changes and inconsistent ride information after a driver has already
+confirmed the ride.
+
+Mitigation:
+We restricted ride update and cancel actions to the ride owner only. Sharers are limited to joining
+or leaving a ride, ensuring that only the original requester can modify ride details.
