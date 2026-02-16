@@ -20,8 +20,8 @@ Supports ride creation, ride sharing, driver assignment, and ride lifecycle mana
 - **Backend:** Django 5.x, Python  
 - **Database:** PostgreSQL  
 - **DevOps:** Docker, Docker Compose  
-- **Email:** SendGrid API  
-
+- **Email:** SendGrid API
+  
 ## Database Design
 
 Custom domain models:
@@ -38,18 +38,20 @@ Designed with normalized schema and referential integrity.
 ```bash
 chmod +x ./web-app/*.sh
 sudo docker-compose up
+```
 
 ##  Visit
 http://<your-vcm-hostname>:8000/  or   http://127.0.0.1:8000/ (if local)
 
 ##  Django Configuration (Local)
 Ensure the following in settings.py:
-
+```bash
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost:8000'
 ]
+```
 
 Author: Zeyuan Zhang, Leo Wei
