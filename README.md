@@ -26,15 +26,19 @@ Supports ride creation, ride sharing, driver assignment, and ride lifecycle mana
 - **Email:** SendGrid API
   
 ## Database Design
+The database is built on Django ORM and consists of core domain models centered around the Ride entity.
 
-Custom domain models:
+- `Ride`
+Core business entity representing ride requests, including owner, destination, arrival time, passenger count, and status.
 
-- `Ride` (core entity)  
-- `DriverProfile` (One-to-One with User)  
-- `Vehicle`  
-- Many-to-Many relationship for ride sharers  
+- `DriverProfile`
+One-to-One extension of the built-in User model to separate authentication from driver-specific data.
 
-Designed with normalized schema and referential integrity.
+- `Vehicle`
+Stores vehicle information associated with drivers.
+
+- `RideSharers`
+Many-to-Many relationship linking rides and participating users.
 
 ##  Quick Start
 
