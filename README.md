@@ -53,7 +53,7 @@ http://127.0.0.1:8000/
 ##  Django Configuration
 Ensure the following in settings.py:
 ```bash
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['web','127.0.0.1', 'localhost']
 
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
