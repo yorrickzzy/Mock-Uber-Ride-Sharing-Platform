@@ -1,3 +1,4 @@
+<img width="947" height="435" alt="image" src="https://github.com/user-attachments/assets/02b4268c-dd35-45b6-83eb-bb026d3e85ef" />
 # Mock Uber Ride-Sharing Platform
 
 A full-stack ride-sharing web application built with **Django, PostgreSQL, and Docker**.
