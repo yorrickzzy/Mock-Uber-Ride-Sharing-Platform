@@ -41,7 +41,11 @@ sudo docker-compose up
 ```
 
 ##  Visit
-http://<your-vcm-hostname>:8000/  or   http://127.0.0.1:8000/ (if local)
+Local：
+http://127.0.0.1:8000/ 
+
+Duke VCM:
+`http://<your-vcm-hostname>:8000/`
 
 ##  Django Configuration (Local)
 Ensure the following in settings.py:
